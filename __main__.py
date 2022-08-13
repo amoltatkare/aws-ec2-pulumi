@@ -1,7 +1,7 @@
 """An AWS Python Pulumi program"""
 
 import pulumi
-from pulumi_aws import aws
+from pulumi_aws import ec2
 
 config = pulumi.Config()
 data = config.require_object("data")
@@ -13,17 +13,15 @@ ami = data.get("ami")
 
 print (machinename + " : " + instancetype + " : " + sg + " : " + subnet + " : " + ami)
 
-"""
-server = aws.ec2.Instance("at-mark4-poc-ec2",
-                        instance_type="t1.micro",
-                        subnet_id="subnet-0dbe15c3953053f18",
+server = ec2.Instance(machinename,
+                        instance_type=instancetype,
+                        subnet_id=subnet,
                         tags= { 
-                            "Name": "at-mark4-poc-ec2" 
+                            "Name": machinename
                         },
-                        vpc_security_group_ids=["sg-0480d2d292d116594"],
+                        vpc_security_group_ids=[sg],
                         #key_name=keypair.id,
-                        ami="ami-0cff7528ff583bf9a")
+                        ami=ami)
 
 pulumi.export('privateIP', server.private_ip)
 pulumi.export('privateDNS', server.private_dns)
-"""
