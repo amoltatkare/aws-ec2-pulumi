@@ -11,7 +11,7 @@ sg = data.get("vpc_security_group_ids")
 subnet = data.get("subnet_id")
 ami = data.get("ami")
 
-#print (machinename + " : " + instancetype + " : " + sg + " : " + subnet + " : " + ami)
+print (machinename + " : " + instancetype + " : " + sg + " : " + subnet + " : " + ami)
 
 server = ec2.Instance(machinename,
                         instance_type=instancetype,
